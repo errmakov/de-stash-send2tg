@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Get the directory where the script is located
 SCRIPT_DIR=$(dirname "$0")
 
@@ -12,7 +11,6 @@ else
     echo ".env.send2tg file not found in $SCRIPT_DIR."
     exit 1
 fi
-
 
 # Generate a unique ID for this script call
 #UNIQUE_ID=$(date +%s%N)-$$	#twice faster (1.5ms vs 3ms)
