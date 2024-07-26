@@ -106,4 +106,10 @@ if [ -n "$MESSAGE_ENCODED" ]; then
         ERROR=1
         log_message "error" "Failed to send message part: $MESSAGE_ENCODED"
     else
-        log_message "info" "Successfully sent message part: $MESSAGE
+        log_message "info" "Successfully sent message part: $MESSAGE_ENCODED"
+    fi
+fi
+
+echo -e ""
+
+exit $ERROR
