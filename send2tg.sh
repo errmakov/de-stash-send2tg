@@ -2,6 +2,25 @@
 # Get the directory where the script is located
 SCRIPT_DIR=$(dirname "$0")
 
+# Function to display usage information
+show_usage() {
+    echo "Usage: $0 [message]"
+    echo "       $0 -h | -? | --help"
+    echo
+    echo "Options:"
+    echo "  -h, -?, --help    Show this help message and exit."
+    echo
+    echo "Description:"
+    echo "  This script sends a message to a specified Telegram chat using the Telegram Bot API."
+    echo "  The message can be provided as an argument or through stdin."
+}
+
+# Handle help options
+if [[ "$1" == "-h" || "$1" == "-?" || "$1" == "--help" ]]; then
+    show_usage
+    exit 0
+fi
+
 # Load environment variables from .env.send2tg file located in the same directory as the script
 if [ -f "$SCRIPT_DIR/.env.send2tg" ]; then
     set -a
@@ -38,7 +57,7 @@ else
     # Read from stdin if no argument is provided
     if [ -t 0 ]; then
         # stdin is not being redirected, provide a helpful message
-        echo "No input provided. Please provide a message as an argument or through stdin."
+        show_usage
         exit 1
     else
         # Read from stdin
@@ -87,10 +106,4 @@ if [ -n "$MESSAGE_ENCODED" ]; then
         ERROR=1
         log_message "error" "Failed to send message part: $MESSAGE_ENCODED"
     else
-        log_message "info" "Successfully sent message part: $MESSAGE_ENCODED"
-    fi
-fi
-
-echo -e ""
-
-exit $ERROR
+        log_message "info" "Successfully sent message part: $MESSAGE
