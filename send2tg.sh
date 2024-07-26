@@ -13,8 +13,6 @@ else
 fi
 
 # Generate a unique ID for this script call
-#UNIQUE_ID=$(date +%s%N)-$$	#twice faster (1.5ms vs 3ms)
-
 UNIQUE_ID=$(date +%s%N)-$$-$(od -vAn -N4 -tu4 < /dev/urandom | tr -d ' ')
 
 log_message() {
@@ -38,7 +36,14 @@ if [ -n "$1" ]; then
     MESSAGE="$1"
 else
     # Read from stdin if no argument is provided
-    MESSAGE=$(cat)
+    if [ -t 0 ]; then
+        # stdin is not being redirected, provide a helpful message
+        echo "No input provided. Please provide a message as an argument or through stdin."
+        exit 1
+    else
+        # Read from stdin
+        MESSAGE=$(cat)
+    fi
 fi
 
 # Check if the message is empty
