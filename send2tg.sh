@@ -21,6 +21,9 @@ if [[ "$1" == "-h" || "$1" == "-?" || "$1" == "--help" ]]; then
     exit 0
 fi
 
+# THREAD_ID is passed as an environment variable
+THREAD_ID=$THREAD_ID
+
 # Load environment variables from .env.send2tg file located in the same directory as the script
 if [ -f "$SCRIPT_DIR/.env.send2tg" ]; then
     set -a
@@ -79,7 +82,7 @@ MESSAGE_ENCODED=$(echo "$MESSAGE" | sed -e 's/\\n/%0A/g')
 
 send_message() {
     local text=$1
-    response=$(curl -s -w "%{http_code}" -o /dev/null -X POST "https://api.telegram.org/bot$SEND2TG_BOT_TOKEN/sendMessage" -d chat_id=$SEND2TG_CHAT_ID -d text="$text")
+    response=$(curl -s -w "%{http_code}" -o /dev/null -X POST "https://api.telegram.org/bot$SEND2TG_BOT_TOKEN/sendMessage" -d chat_id=$SEND2TG_CHAT_ID -d text="$text" -d  message_thread_id=$THREAD_ID)
     return $response
 }
 
