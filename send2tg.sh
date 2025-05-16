@@ -12,7 +12,10 @@ show_usage() {
     echo
     echo "Description:"
     echo "  This script sends a message to a specified Telegram chat using the Telegram Bot API."
-    echo "  The message can be provided as an argument or through stdin."
+    echo "  The message can be provided as an argument or through stdin.
+    
+    "
+    echo "THREAD_ID (telegram topic id within the supergroup) should be passed as an environment variable."
 }
 
 # Handle help options
